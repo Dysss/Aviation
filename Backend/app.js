@@ -1,11 +1,18 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const multer = require("multer");
+const cors = require("cors");
 const routeTable = require("./routes/routeTable.js");
 const app = express();
 
-const upload = multer({ dest: "uploads/" });
+const corsOptions = {
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: "GET,POST,PUT",
+    allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions));
 
 mongoose
     .connect(process.env.MONGO_URL)

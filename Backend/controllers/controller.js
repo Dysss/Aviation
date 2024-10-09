@@ -10,7 +10,15 @@ exports.uploadCsv = async (req, res) => {
         await new Promise((resolve, reject) => {
             fs.createReadStream(req.file.path)
                 .pipe(csv())
-                .on("data", (row) => data.push(row))
+                .on("data", (row) => {
+                    data.push({
+                        postId: row[Object.keys(row)[0]],
+                        id: row.id,
+                        name: row.name,
+                        email: row.email,
+                        body: row.body,
+                    });
+                })
                 .on("end", resolve)
                 .on("error", reject);
         });
@@ -32,9 +40,8 @@ exports.uploadCsv = async (req, res) => {
     try {
         await csvModel.deleteMany({});
         result = await csvModel.insertMany(data);
-        // console.log(data);
 
-        console.log(result);
+        console.log("Data inserted successfully");
     } catch (err) {
         console.log("Failed to upload data \n", err);
         return res.status(500).json({ message: "Error: Failed to upload file" });
