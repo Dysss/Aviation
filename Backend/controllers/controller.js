@@ -1,4 +1,5 @@
 const csv = require("csv-parser");
+const stripBomStream = require("strip-bom-stream");
 const csvModel = require("../models/DataModel.js");
 const fs = require("fs");
 
@@ -9,15 +10,10 @@ exports.uploadCsv = async (req, res) => {
     try {
         await new Promise((resolve, reject) => {
             fs.createReadStream(req.file.path)
+                .pipe(stripBomStream()) // Handle byte-order marks
                 .pipe(csv())
                 .on("data", (row) => {
-                    data.push({
-                        postId: row[Object.keys(row)[0]],
-                        id: row.id,
-                        name: row.name,
-                        email: row.email,
-                        body: row.body,
-                    });
+                    data.push(row)
                 })
                 .on("end", resolve)
                 .on("error", reject);
@@ -56,7 +52,7 @@ exports.uploadCsv = async (req, res) => {
 
 exports.getData = async (req, res) => {
     const page = req.query.page || 1;
-    const pageItems = 20;
+    const pageItems = 10;
 
     try {
         const query = req.query.search

@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
     import { axiosInstance } from "../axios";
 	import LoadingSpinner from "./LoadingSpinner.svelte";
+    import { newUpload } from "../stores/upload";
 
     let data = [];
     let page = 1;
@@ -24,6 +25,7 @@
             }
 
             data = response.data;
+            newUpload.set(false);
         } catch (err) {
             console.log(err)
             alert("Failed to fetch data!")
@@ -43,7 +45,11 @@
         fetchData();
     }
 
-    onMount(fetchData)
+    $: if ($newUpload) {
+        fetchData()
+    }
+
+    // onMount(fetchData)
 </script>
 
 <h1>View CSV data</h1>

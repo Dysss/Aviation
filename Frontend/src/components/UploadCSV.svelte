@@ -1,7 +1,7 @@
 <script>
-	import { onMount } from "svelte";
     import { axiosInstance } from "../axios";
 	import LoadingSpinner from "./LoadingSpinner.svelte";
+    import { newUpload } from "../stores/upload";
 
     let file;
     let loading = false;
@@ -25,17 +25,19 @@
                 }
             })
 
+            loading = false;
+
             if (response.status === 200) {
+                newUpload.set(true);
                 alert("File uploaded successfully");
             } else {
                 console.log(response.status)
                 alert("Error uploading file")
             }
         } catch (error) {
+            loading = false;
             console.error("Upload error:", error);
             alert("Error uploading file")
-        } finally {
-            loading = false;
         }
     }
 
