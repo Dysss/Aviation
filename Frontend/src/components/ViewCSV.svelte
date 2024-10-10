@@ -24,7 +24,12 @@
                 return alert("Failed to fetch data!")
             }
 
-            data = response.data;
+            if (response.data.data.length > 0) {
+                data = response.data.data;
+            } else {
+                alert("No entries found");
+            }
+
             newUpload.set(false);
         } catch (err) {
             console.log(err)
@@ -76,6 +81,7 @@
         </tr>
     </thead>
     <tbody>
+        {#if data.length > 0}
         {#each data as row}
         <tr>
             <td>{row.postId}</td>
@@ -85,6 +91,7 @@
             <td>{row.body}</td>
         </tr>
         {/each}
+        {/if}
     </tbody>
 </table>
 

@@ -28,23 +28,13 @@ let server = app.listen(process.env.PORT, () => {
     console.log(`Server listening on port ${process.env.PORT}`);
 });
 
+// Delete stored data on shutdown
 async function handleShutdown () {
-    console.log("Shutting down server");
-    try {
-        await csvModel.deleteMany({});
-    } catch (err) {
-        console.log(err)
-    }
-    console.log("Server shut down");
-    server.close((err) => {
-        process.exit(err ? 1 : 0);
-    })
-}
-
-process.on('SIGTERM', async () => await handleShutdown())
-process.on('SIGINT', async () => {
     console.log("Shutting down server")
     await csvModel.deleteMany({});
     console.log("Data deleted");
     server.close((err) => err ? process.exit(1) : process.exit(0))
-})
+}
+
+process.on('SIGTERM', async () => await handleShutdown())
+process.on('SIGINT', async () => await handleShutdown())
