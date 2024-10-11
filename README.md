@@ -38,6 +38,7 @@
     MONGO_URL=<mongodb_connection_url>
     MONGO_TEST_URL=<mongodb_test_connection_url>
     PORT=<port>
+    ALLOWED_ORIGINS=<comma-separated list of allowed origins>
     ```
 
 
@@ -79,3 +80,6 @@ Your application should now be running at http://localhost:<frontend_port>
 - Only CSV file uploads are accepted
 - Uploading a new file will override the existing data
 - Uploaded data will be purged on application shutdown
+
+
+For ease of testing, I have included .env files in this repo so that step 4 is not required. Node backend server will run on port 3000 and Svelte preview will run on port 4173
