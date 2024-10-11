@@ -38,6 +38,7 @@
     MONGO_URL=<mongodb_connection_url>
     MONGO_TEST_URL=<mongodb_test_connection_url>
     PORT=<port>
+    ALLOWED_ORIGINS=<comma-separated list of allowed origins>
     ```
 
 
