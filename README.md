@@ -71,3 +71,11 @@
     npm run preview
     ```
 Your application should now be running at http://localhost:<frontend_port>
+
+## Assumptions
+- The uploaded csv file will be in the same format as data.csv (also included in the root directory of this repository)
+  + Headers not contained in data.csv will not be displayed
+  + Missing headers will be empty
+- Only CSV file uploads are accepted
+- Uploading a new file will override the existing data
+- Uploaded data will be purged on application shutdown
