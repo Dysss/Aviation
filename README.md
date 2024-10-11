@@ -50,7 +50,7 @@
 
 5. (OPTIONAL) Run tests
     ```
-    npm run test
+    npm test
     ```
 6. Build Svelte app
     Using the cmd/powershell window in 3b, build the Svelte app using\
